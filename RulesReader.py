@@ -39,6 +39,17 @@ class Rules_administrator(object):
         print('Read successfully~')
         return self._Rules
     
+    def _show_premises(self):
+        """Return a set including all premises
+        
+        Returns:
+            premise(set): all premises
+        """
+        premise = set()
+        for i in range(self._RulesNum):
+            premise = premise | list(self._Rules[i].values())[0]
+        return premise
+    
     def _save_rules(self, NewRulesPath):
         """Store rules in Excel on a path
         

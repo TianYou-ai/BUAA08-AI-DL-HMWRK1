@@ -9,19 +9,28 @@ rpath = 'Rules.xlsx'
 InputPromise = {'有羽毛', '会游泳', '有黑白二色', '不会飞'}
 testr = {'会游泳', '有黑白二色', '不会飞'}
 
+def Premises(RulesPath):
+    import RulesReader as RR
+    Ra = RR.Rules_administrator(RulesPath)
+    Ra._read_rules()
+    return Ra._show_premises()
+
 def Rules_adder(RulesPath, NewRule, NewRulesPath = None, ifSave = True):
     import RulesReader as RR
     Ra = RR.Rules_administrator(RulesPath)
+    Ra._read_rules()
     Ra.add_rule(NewRule, NewRulesPath, ifSave)
     
 def Rules_deleter(RulesPath, OldRule, NewRulesPath = None, ifSave = True):
     import RulesReader as RR
     Ra = RR.Rules_administrator(RulesPath)
+    Ra._read_rules()
     Ra.delete_rule(OldRule, NewRulesPath, ifSave)
     
 def Rules_modifier(RulesPath, NewRule, OldRule, NewRulesPath = None, ifSave = True):
     import RulesReader as RR
     Ra = RR.Rules_administrator(RulesPath)
+    Ra._read_rules()
     Ra.modify_rule(OldRule, NewRule, NewRulesPath, ifSave)
     
 def Rules_matcher(InputPromise, RulesPath):
@@ -55,5 +64,6 @@ def Rules_matcher(InputPromise, RulesPath):
     return '该动物{}'.format(conclusion)
 
 if __name__ == '__main__':
+    print(Premises(rpath))
     Rules_matcher(InputPromise, RulesPath = rpath)     
     Rules_matcher(testr, RulesPath = rpath)     
