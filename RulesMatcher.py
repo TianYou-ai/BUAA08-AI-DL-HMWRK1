@@ -19,7 +19,8 @@ def Rules_adder(RulesPath, NewRule, NewRulesPath = None, ifSave = True):
     import RulesReader as RR
     Ra = RR.Rules_administrator(RulesPath)
     Ra._read_rules()
-    Ra.add_rule(NewRule, NewRulesPath, ifSave)
+    res = Ra.add_rule(NewRule, NewRulesPath, ifSave)
+    return res
     
 def Rules_deleter(RulesPath, OldRule, NewRulesPath = None, ifSave = True):
     import RulesReader as RR
@@ -41,14 +42,14 @@ def Rules_matcher(InputPromise, RulesPath):
         RulesPath(str): The physical loaction of the rule base
     
     Returns:
-        conclusion(str): The name of an animal
+        conclusion(dict): A dict of names of animals
     """
     import RulesReader as RR
     Ra = RR.Rules_administrator(RulesPath)
     rules = Ra._read_rules()
     rules_copy = rules.copy()
     flag = True
-    conclusion = '什么都不是'
+    conclusion = dict()
     while flag:
         i = 0
         flag = False
@@ -58,12 +59,15 @@ def Rules_matcher(InputPromise, RulesPath):
                 InputPromise.add(list(rule.keys())[0])
                 rules_copy.pop(i)
                 flag = True
-                conclusion = list(rule.keys())[0]
+                new_conclusion = list(rule.keys())[0]
+                conclusion[new_conclusion] = existed_promise
             i += 1
-    print('该动物{}'.format(conclusion))
-    return '该动物{}'.format(conclusion)
+    #print('结论: {}'.format(conclusion))
+    return conclusion
 
 if __name__ == '__main__':
-    print(Premises(rpath))
-    Rules_matcher(InputPromise, RulesPath = rpath)     
-    Rules_matcher(testr, RulesPath = rpath)     
+    
+    Premises(rpath)
+    print(Rules_matcher(InputPromise, RulesPath = rpath))     
+    print(Rules_matcher(testr, RulesPath = rpath))     
+    

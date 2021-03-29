@@ -103,7 +103,7 @@ class Rules_administrator(object):
             ifSave(bool): Whether or not to save the new rule base file
         
         Returns:
-            None
+            (bool): Adding seuccessfully or not
         """
         if NewRulesPath == None:
             NewRulesPath = self._RulesPath
@@ -112,8 +112,10 @@ class Rules_administrator(object):
             print('Add the new rule successfully~')
             if ifSave:
                 self._save_rules(NewRulesPath)
+            return True
         else:
             print('The new rule has been existed~')
+            return False
         
     def delete_rule(self, OldRule, NewRulesPath = None, ifSave = True):
         """Dropping a rule from the rule base
